@@ -1,6 +1,6 @@
 services:
   configserver:
-    image: "springcloud/configsrvforcoffeemachine:v1"
+    image: "springcloud/coffeeconfigserver:v1"
     container_name: configserver-ms
     ports:
       - "8071:8071"
@@ -15,7 +15,7 @@ services:
       service: microservice-base-config
 
   eurekaserver:
-    image: "springcloud/eurekarvforcoffeemachine:v1"
+    image: "springcloud/eurekacoffee:v1"
     container_name: eurekaserver-ms
     ports:
       - "8070:8070"
@@ -32,10 +32,10 @@ services:
       file: common-config.yml
       service: microservice-configserver-config
     environment:
-      SPRING_APPLICATION_NAME: "eurekarvforcoffeemachine"
+      SPRING_APPLICATION_NAME: "eurekacoffee"
 
   coffeemachine:
-    image: "springcloud/coffeemachineconfigsrv:v1"
+    image: "springcloud/coffeemachine:v1"
     container_name: coffeemachine-ms
     ports:
       - "8080:8080"
@@ -51,7 +51,7 @@ services:
       retries: 10
       start_period: 10s
     environment:
-      SPRING_APPLICATION_NAME: "coffeemachineconfigsrv"
+      SPRING_APPLICATION_NAME: "coffeemachine"
     extends:
       file: common-config.yml
       service: microservice-eureka-config
@@ -59,7 +59,7 @@ services:
  
 
   drinkcoffee:
-    image: "springcloud/drinkcofeefeign:v1"
+    image: "springcloud/drinkcoffeefeign:v1"
     container_name: drinkcoffee-ms
     ports:
       - "8090:8090"
@@ -75,13 +75,13 @@ services:
       retries: 10
       start_period: 10s
     environment:
-      SPRING_APPLICATION_NAME: "drinkcofeefeign"
+      SPRING_APPLICATION_NAME: "drinkcoffeefeign"
     extends:
       file: common-config.yml
       service: microservice-eureka-config
 
   gatewayserver:
-    image: "springcloud/gatewayforcoffeemachine:v1"
+    image: "springcloud/gatewaycoffee:v1"
     container_name: gatewayserver-ms
     ports:
       - "8072:8072"
@@ -91,7 +91,7 @@ services:
       drinkcoffee:
         condition: service_healthy
     environment:
-      SPRING_APPLICATION_NAME: "gatewayforcoffeemachine"
+      SPRING_APPLICATION_NAME: "gatewaycoffee"
     extends:
       file: common-config.yml
       service: microservice-eureka-config
